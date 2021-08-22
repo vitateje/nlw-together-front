@@ -12,5 +12,9 @@ export default {
 
     atualizar:(user) => {
         return http.put('users', user)
+    },
+
+    apagar:(user) => {
+        return http.delete('users', {data: user})
     }
 }

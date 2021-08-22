@@ -9,13 +9,13 @@
     <div class="container">
       <form @submit.prevent="salvar">
         <label>Nome</label>
-        <input type="text" placeholder="Nome" v-model="user.name">
+        <input type="text" placeholder="Nome" v-model="user.name" />
         <label>Email</label>
-        <input type="text" placeholder="Email" v-model="user.email">
+        <input type="text" placeholder="Email" v-model="user.email" />
         <label>Admin</label>
-        <input type="text" placeholder="Usuario Admin" v-model="user.admin">
+        <input type="text" placeholder="Usuario Admin" v-model="user.admin" />
         <label>Senha</label>
-        <input type="text" placeholder="Password" v-model="user.password">
+        <input type="text" placeholder="Password" v-model="user.password" />
 
         <button class="waves-effect waves-light btn-small">
           Salvar<i class="material-icons left">save</i>
@@ -37,10 +37,16 @@
             <td>{{ user.email }}</td>
             <td>{{ user.admin }}</td>
             <td>
-              <button class="waves-effect btn-small blue darken-1">
+              <button
+                @click="editar(user)"
+                class="waves-effect btn-small blue darken-1"
+              >
                 <i class="material-icons">create</i>
               </button>
-              <button class="waves-effect btn-small red darken-1">
+              <button
+                @click="remover(user)"
+                class="waves-effect btn-small red darken-1"
+              >
                 <i class="material-icons">delete_sweep</i>
               </button>
             </td>
@@ -83,18 +89,46 @@ export default {
     },
 
     salvar(){
-      User.salvar(this.user).then(resposta => {
+
+      if(!this.user.id) {
+
+        User.salvar(this.user).then(resposta => {
         this.user = {}
         this.users = resposta.data;
         this.listar()
       }).catch(e => {
         this.errors = e.reponse.data.errors
       })
+
+      }else {
+        User.atualizar(this.user).then(resposta => {
+        this.user = {}
+        this.users = resposta.data;
+        this.listar()
+      }).catch(e => {
+        this.errors = e.reponse.data.errors
+      })
+      }
+
+
     },
 
-    listar(){
-      return 
+    editar(user){
+      this.user = user
+    },
+
+    remover(user){
+      if(confirm('Deseja excluir o produto?')){
+        User.apagar(user).then(resposta =>{
+        this.listar();
+        this.users = resposta.data;
+        this.errors = []
+      }).catch(e => {
+        this.errors = e.reponse.data.errors
+      })
+      }
     }
+
   }
 };
 </script>
