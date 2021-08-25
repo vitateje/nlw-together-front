@@ -58,19 +58,17 @@
 </template>
 
 <script>
-
 import User from "./services/produtos";
 
 export default {
   data() {
     return {
-
       user: {
         id: "",
-        name:"",
-        email:"",
+        name: "",
+        email: "",
         password: "",
-        admin:"",
+        admin: "",
       },
 
       users: [],
@@ -79,61 +77,66 @@ export default {
     };
   },
   mounted() {
-    this.listar()
+    this.listar();
   },
 
-  methods:{
-
-    listar(){
+  methods: {
+    listar() {
       User.listar().then((resposta) => {
-      this.users = resposta.data;
-    });
+        this.users = resposta.data;
+      });
     },
 
-    salvar(){
-
-      if(!this.user.id) {
-
-        User.salvar(this.user).then(resposta => {
-        this.user = {}
-        this.users = resposta.data;
-        this.listar()
-      }).catch(e => {
-        this.errors = e.reponse.data.errors
-      })
-
-      }else {
-        User.atualizar(this.user).then(resposta => {
-        this.user = {}
-        this.users = resposta.data;
-        this.listar()
-      }).catch(e => {
-        this.errors = e.response.data.errors
-      })
+    salvar() {
+      if (!this.user.id) {
+        User.salvar(this.user)
+          .then((resposta) => {
+            this.user = {};
+            this.users = resposta.data;
+            this.listar();
+          })
+          .catch((e) => {
+            this.errors = e.reponse.data.errors;
+          });
+      } else {
+        User.atualizar(this.user)
+          .then((resposta) => {
+            alert("Dados Atualizados com sucesso");
+            this.user = {};
+            this.users = resposta.data;
+            this.listar();
+          })
+          .catch((e) => {
+            this.errors = e.response.data.errors;
+          });
       }
-
-
     },
 
-    editar(user){
-      this.user = user
+    editar(user) {
+      this.user = user;
     },
 
-    remover(user){
-      if(confirm('Deseja excluir o produto?')){
-        User.apagar(user).then(resposta =>{
-        this.listar();
-        this.users = resposta.data;
-        this.errors = []
-      }).catch(e => {
-        this.errors = e.response.data.errors
-      })
+    remover(user) {
+      if (confirm("Deseja excluir o produto?")) {
+        User.apagar(user)
+          .then((resposta) => {
+            alert("Dados Atualizados com sucesso");
+            this.listar();
+            this.users = resposta.data;
+            this.errors = [];
+          })
+          .catch((e) => {
+            this.errors = e.response.data.errors;
+          });
       }
-    }
-
-  }
+    },
+  },
 };
 </script>
 
 <style>
+
+.container {
+  margin-top: 25px;
+}
 </style>
