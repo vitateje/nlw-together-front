@@ -66,8 +66,10 @@ export default {
     return {
 
       user: {
+        id: "",
         name:"",
         email:"",
+        password: "",
         admin:"",
       },
 
@@ -106,7 +108,7 @@ export default {
         this.users = resposta.data;
         this.listar()
       }).catch(e => {
-        this.errors = e.reponse.data.errors
+        this.errors = e.response.data.errors
       })
       }
 
@@ -124,7 +126,7 @@ export default {
         this.users = resposta.data;
         this.errors = []
       }).catch(e => {
-        this.errors = e.reponse.data.errors
+        this.errors = e.response.data.errors
       })
       }
     }

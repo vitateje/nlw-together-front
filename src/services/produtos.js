@@ -11,7 +11,7 @@ export default {
     },
 
     atualizar:(user) => {
-        return http.put('users', user)
+        return http.put(`users/${user.id}`, user)
     },
 
     apagar:(user) => {
