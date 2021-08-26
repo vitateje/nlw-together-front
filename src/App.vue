@@ -20,6 +20,7 @@
         <button class="waves-effect waves-light btn-small">
           Salvar<i class="material-icons left">save</i>
         </button>
+
       </form>
 
       <table>
@@ -58,6 +59,7 @@
 </template>
 
 <script>
+
 import User from "./services/produtos";
 
 export default {
@@ -98,7 +100,7 @@ export default {
           .catch((e) => {
             this.errors = e.reponse.data.errors;
           });
-      } else {
+      }else {
         User.atualizar(this.user)
           .then((resposta) => {
             alert("Dados Atualizados com sucesso");
