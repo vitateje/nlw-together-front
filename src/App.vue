@@ -121,8 +121,9 @@ export default {
         User.apagar(user)
           .then((resposta) => {
             alert("Dados Atualizados com sucesso");
-            this.listar();
+            this.user = {};
             this.users = resposta.data;
+            this.listar();
             this.errors = [];
           })
           .catch((e) => {
@@ -132,6 +133,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
@@ -139,4 +141,5 @@ export default {
 .container {
   margin-top: 25px;
 }
+
 </style>
